@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FirebaseApp } from '@angular/fire';
+import { FilterPipe } from 'src/app/Pipe/filter.pipe';
 
 @Component({
   selector: 'app-log',
@@ -12,35 +13,29 @@ export class LogComponent implements OnInit {
 
 	public logs = [];
 	public imgs = [];
-
+	public fecha:string;
 	constructor(private fireStore: AngularFirestore, private fireStorage: AngularFireStorage, private firebase: FirebaseApp) {
-
-		this.logs = this.returnAll();
-
+		this.logs=new Array();
+		this.returnAll();
+		this.fecha="";
 	}
 
   	public returnAll() {
-
-  		//return this.fireStore.collection('users').snapshotChanges();
   		let log;
 
-		this.fireStore.collection('logs').snapshotChanges().subscribe((res) => {
+		this.fireStore.collection('logs').snapshotChanges().subscribe((res) => 
 			res.forEach(r => {
 				log = r.payload.doc.data();
 	              
 	            this.logs.push({
 	                id: r.payload.doc.id,
 	                data: r.payload.doc.data()
-	            });
-
-	   			this.returnImg(log["name"] + ".png");
-
-	            console.log(log["name"]);
+	            })
 
 			})
-		});
+		);
 
-		return this.logs;
+		
   	}
 
   	public returnImg(dni: string){

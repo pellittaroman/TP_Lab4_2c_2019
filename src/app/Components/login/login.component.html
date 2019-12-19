@@ -12,7 +12,7 @@
     <div class="card text-white bg-dark mb-4">
     <article class="card-body">
     <h3 class="card-title text-center mb-4 mt-1"><b>Login</b></h3>
-    <img src="../../../assets/diente.jpg" style="height: 150px;width: 150px;border-radius: 50%;margin-left: 40%;">
+    <img src="./assets/diente.jpg" style="height: 150px;width: 150px;border-radius: 50%;margin-left: 40%;">
     <form [formGroup]="form">
         <div class="form-group">
           <label><b>E-mail</b></label>
@@ -34,10 +34,11 @@
             </select> 
             <!-- <input type="text" formControlName="type" class="form-control" required> -->
           </div>
-          <div class="form-group">
-          <!-- <label><b>Captcha</b></label> -->
-          <ngx-recaptcha2 formControlName="recaptcha" #captchaElem [siteKey]="'6LcLuq8UAAAAAKg-NVY7JNSP7KRRW6ZJMN4siNje'" [useGlobalDomain]="false"></ngx-recaptcha2>
-          </div>
+         
+          <!--ngx-recaptcha2 formControlName="recaptcha" #captchaElem [siteKey]="'6LcLuq8UAAAAAKg-NVY7JNSP7KRRW6ZJMN4siNje'" [useGlobalDomain]="false"></ngx-recaptcha2-->
+          <!--ngx-recaptcha2 formControlName="recaptcha" #captchaElem [siteKey]="'6LcC0cIUAAAAAPkNTXbppwPLzUXGEhg9O1sOBS4m'" [useGlobalDomain]="false"></ngx-recaptcha2-->
+          
+        
           <div class="form-group">
             <label><b>Acceso rápido:</b></label>
             <select formControlName="loader" class="form-control" (change)="defaultLoader($event.target.value)" required>
@@ -48,9 +49,17 @@
             </select> 
             <!-- <input type="text" formControlName="type" class="form-control" required> -->
           </div>
-          <small *ngIf="error" class=""><i class="fa fa-times"></i> {{errorMessage}} </small>
-          <button type="submit" (click)="tryLogin()" class="btn btn-success" style="float:right;"><b>Ingresar</b></button>                                                         
+                                                             
     </form>
+    <div  style="background-color: gray;width: 40%;border-radius: 5%;text-align: center;margin-bottom: 5%; border-style: solid; width: 25%; height: 25%; border-color: black;">
+           
+        <label for="">CUANTO ES...</label><br> 
+         <label for="" style="background-color: darkslateblue;width: 150px;height: 50px;padding-top: 5%;color: gray;">{{rand}}+{{rand1}}</label> <br>   
+        <input type="text" id="r" [(ngModel)]="resul" style="margin-bottom: 10%;" size="2" maxlength="2">
+      </div>
+      <small *ngIf="error" class=""><i class="fa fa-times"></i> {{errorMessage}} </small>
+          <button type="submit" (click)="tryLogin()" class="btn btn-success" style="float:right;"><b>Ingresar</b></button> 
+          <button class="btn btn-secondary" routerLink="/Registra" >Registrar</button>     
     </article>
      <!-- card.// -->
      

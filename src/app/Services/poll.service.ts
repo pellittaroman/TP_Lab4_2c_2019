@@ -11,7 +11,7 @@ export class PollService {
 	constructor(private fireStore: AngularFirestore) {}
 
 
-	pollRegister(dni: string, clinic: string, specialist: string, desc: string): Promise<Object>{
+	pollRegister(dni: string, clinic: string, specialist: string, desc: string,id:string): Promise<Object>{
 
   	//Validación...
 
@@ -19,29 +19,34 @@ export class PollService {
 	      dni: dni,
 	      clinic: clinic,
 	      specialist: specialist,
-	      desc: desc
+		  desc: desc,
+		  id: id
 	    };
 
 	    return this.fireStore.collection('polls').add(request);
   	}
 
-  	public returnAll() {
+  	public returnById(id: string) {
 
-  		//return this.fireStore.collection('users').snapshotChanges();
-  		let poll;
+		//return this.fireStore.collection('users').snapshotChanges();
+		let review;
 
-		this.fireStore.collection('polls').snapshotChanges().subscribe((res) => {
-			res.forEach(r => {
-				poll = r.payload.doc.data();
-	              
-	            	this.polls.push({
-	                	id: r.payload.doc.id,
-	                	data: r.payload.doc.data()
-	              	});
-				
-			})
-		});
+	  this.fireStore.collection('polls').snapshotChanges().subscribe((res) => {
+		  res.forEach(r => {
+			  review = r.payload.doc.data();
 
-		return this.polls;
-  	}
+			  if(review["id"] == id){
+
+				  this.polls.push({
+					  
+					  data: r.payload.doc.data()
+					});
+
+			  }
+			  
+		  })
+	  });
+
+	  return this.polls;
+	}
 }

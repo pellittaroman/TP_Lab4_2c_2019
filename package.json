@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~8.1.2",
     "@angular/router": "~8.1.2",
     "@ng-bootstrap/ng-bootstrap": "^5.1.0",
+    "alife-file-to-base64": "0.0.4",
     "angular-pdf-generator": "^0.1.0",
     "angularfire2": "^5.2.1",
     "bootstrap": "^4.3.1",

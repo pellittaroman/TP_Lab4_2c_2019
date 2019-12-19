@@ -119,20 +119,4 @@ export class DentistShiftService {
 		return count;
   	}
 
-    	/*public userRegister(dni: string, email: string, password: string, firstName: string, lastName: string, type: string, file: any): Promise<Object> {
-	    const request: Object = {
-	      dni: dni,
-	      email: email,
-	      password: password,
-	      firstName: firstName,
-	      lastName: lastName,
-	      type: type
-	    };
-
-	    this.authService.signUp(email, password);
-
-	    console.log(this.fireStorage.upload(dni, file));
-
-	    return this.fireStore.collection('users').add(request);
-	}*/
-}
+}	

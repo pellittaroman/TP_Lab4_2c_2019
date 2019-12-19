@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit {
 
 	public form: FormGroup;
 	selectedFiles: FileList;
-
+	foto;
 	public errorMessage: string;
 	public error: boolean;
 	public success: boolean;
@@ -36,8 +36,8 @@ export class RegisterComponent implements OnInit {
   			password: ['', [Validators.required, Validators.minLength(6)]],
   			name: ['', [Validators.required]],
   			
-  			type: ['Cliente', [Validators.required]],
-  			file: ['', [Validators.required, Validators.nullValidator]],
+  			type: ['', [Validators.required]],
+  			foto: ['', [Validators.required, Validators.nullValidator]],
         recaptcha: ['']
   		});
 	}
@@ -53,33 +53,20 @@ export class RegisterComponent implements OnInit {
 	    	const type: string = this.form.get('type').value;
 
 	    	//let file = this.form.get('file');
-	    	let file = this.selectedFiles.item(0);
+	    	
 
-			this.userService.userRegister(dni, email, password, name, type, file)
-				.then(
-					response => {
-              			this.success = true;
-              			this.resetForm();
-          			}
-        		)
-        		.catch(
-          			error => {
-            			this.error = true;
-            			this.errorMessage = error['Mensaje'];
-            			console.log(error)
-          			}
-        		);
+			this.userService.userRegister(dni, email, password, name, type, this.foto);
+				
     			} else {
       				this.errorMessage = 'Debe completar los campos correctamente.';
 					this.error = true;
 				}
+				this.router.navigate(['/Dashboard']);
 	}
 
 
 	onFileChange(event) {
-		if(event.target.files.length > 0){
-			this.selectedFiles = event.target.files;
+		this.foto=event[0].base64;
 		}
   }	
 
-}

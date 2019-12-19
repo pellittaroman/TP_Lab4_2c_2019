@@ -10,7 +10,9 @@
 
   <div class="card text-white bg-info mb-4 mx-auto" style="width: 60rem;">
   <article class="card-body" style="width: 60rem;">
-
+<div class="form-group">
+  <input type="date" class="form-control" name="filtro"  [(ngModel)]="fecha">
+</div>
 
 <table appPanel class="table table-sm table-hover table-info table-striped">
   <thead>
@@ -23,16 +25,16 @@
       <th>Nombre</th>
       
       <th>Fecha & hora</th>
-      <!-- <th>Imagen</th> -->
+      <!-- <th>Imagen ;let i = index;</th> -->
     </tr>
   </thead>
   <tbody>
-	<tr *ngFor="let log of logs; let i = index">
+	<tr *ngFor="let log of logs | filter:fecha" [appTipo]="log.data.type">
 	<td>{{log.data.email}}</td>
 	
 	<td>{{log.data.name}}</td>
 	
-	<td>{{log.data.date}}</td>
+	<td>{{log.data.date | filtroT}}</td>
 	<!-- <td><img src="{{imgs[i]}}"  height="75" width="75"></td>
     </tr> -->
   </tbody>

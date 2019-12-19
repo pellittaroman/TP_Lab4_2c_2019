@@ -9,6 +9,7 @@ import { DentistShiftViewerComponent } from './Components/dentist-shift-viewer/d
 import { AuthGuard } from './Guards/auth.guard';
 import { CommonModule } from '@angular/common';
 import { StatisticsComponent } from './Components/statistics/statistics.component';
+import { RegistroComponent } from './Components/registro/registro.component';
 
 //const routes: Routes = [];
 
@@ -56,6 +57,7 @@ const routes: Routes = [
 	  ]
  	},
 	{ path: 'Login', component: LoginComponent },
+	{ path: 'Registra', component:RegistroComponent},
 	{ path: '*', redirectTo: 'Login', pathMatch: 'full' }
 ];
 

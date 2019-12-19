@@ -65,8 +65,8 @@ export class AuthService {
 	      .auth
 	      .createUserWithEmailAndPassword(email, password)
 	      .then(value => {
-	        console.log('Registro correcto!', value);
-	        this.router.navigate(['/Dashboard']);
+	       
+	        
 	      })
 	      .catch(err => {
 	        console.log('Error, algo fallo!',err.message);
@@ -78,5 +78,9 @@ export class AuthService {
     	this.fireAuth.auth.signOut();
     	//location.reload();
     	//this.router.navigate(['/Dashboard']);
+	}
+	Isauth()
+	{
+		return this.fireAuth.auth.currentUser.toJSON();
 	}
 }

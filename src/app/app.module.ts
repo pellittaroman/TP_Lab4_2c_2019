@@ -9,7 +9,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
-//import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './Components/login/login.component';
@@ -26,7 +26,12 @@ import { TypeValidatorDirective } from './Directives/type-validator.directive';
 import { StatisticsComponent } from './Components/statistics/statistics.component';
 import { LogComponent } from './Components/log/log.component';
 import { SampleModule } from 'angular-pdf-generator';
-
+import { FilterPipe } from './Pipe/filter.pipe';
+import { FilterEPipe } from './Pipe/filter-e.pipe';
+import { FiltroTPipe } from './Pipe/filtro-t.pipe';
+import { RegistroComponent } from './Components/registro/registro.component';
+import{ AlifeFileToBase64Module } from 'alife-file-to-base64';
+import { TipoDirective } from './Directives/tipo.directive'
 
 @NgModule({
   declarations: [
@@ -41,7 +46,12 @@ import { SampleModule } from 'angular-pdf-generator';
     TypeValidatorDirective,
     StatisticsComponent,
     LogComponent,
-    StatisticsComponent 
+    StatisticsComponent,
+    FilterPipe,
+    FilterEPipe,
+    FiltroTPipe,
+    RegistroComponent,
+    TipoDirective 
   ],
   imports: [
     BrowserModule,
@@ -56,7 +66,8 @@ import { SampleModule } from 'angular-pdf-generator';
     NgbModule,
     NgxSpinnerModule,
     NgxCaptchaModule,
-    SampleModule
+    SampleModule,
+    AlifeFileToBase64Module
   ],
   providers: [],
   bootstrap: [AppComponent]

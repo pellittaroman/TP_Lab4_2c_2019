@@ -12,15 +12,18 @@
         <div class="col-sm-8 col-md-6 col-lg-4">
 
     <div class="card text-white bg-dark mb-4 mx-auto" style="width: 60rem;">
+            
     <article class="card-body" style="width: 60rem;">
-
+            <div class="form-group" *appTypeValidator="['Administrador']">
+                 <button type="menu"*ngFor="let esp of especialista" (click)="mandar(esp.data.name)" >{{esp.data.name}}</button>
+                  </div>
 <table appPanel id="tablaPDF" class="table table-sm table-hover table-info table-striped">
   <thead>
     <tr>
       <th class="text-center" colspan="7"><b>Lista de turnos</b></th>
     </tr>
     <tr>
-      <th>Código</th>
+     
       <th>DNI</th>
       <th>Fecha</th>
       <th>Hora</th>
@@ -28,27 +31,48 @@
       <th>Estado</th>
     </tr>
   </thead>
-  <tbody>
-	<tr *ngFor="let dentistShift of dentistShiftList">
-	<td>{{dentistShift.id}}</td>
+  <tbody *appTypeValidator="['Cliente']">
+	<tr   *ngFor="let dentistShift of dentistShiftList">
+   
 	<td>{{dentistShift.data.dni}}</td>
 	<td>{{dentistShift.data.date}}</td>
 	<td>{{dentistShift.data.hour}}</td>
 	<td>{{dentistShift.data.specialist}}</td>
-	<td>{{dentistShift.data.status}}</td>
-	<td><button class="btn-sm btn-danger" *ngIf="dentistShift.data.status=='Pedido'&& user.type=='Recepcionista' "  (click)="cancel(dentistShift.id)">Cancelar turno</button></td>
-	<td><button class="btn-sm btn-danger" *ngIf="dentistShift.data.status=='Pedido'&& user.type=='Especialista' " (click)="attend(dentistShift.id, dentistShift.data.dni, dentistShift.data.date, dentistShift.data.hour, dentistShift.data.specialist)">Atender turno</button></td>
-	<td><button class="btn-sm btn-danger" *appTypeValidator="['Especialista']" (click)="openModal1(dentistShift.id)">Enviar reseña</button></td>
-	<td><button class="btn-sm btn-danger" *appTypeValidator="['Cliente']" (click)="viewReview(dentistShift.id)">Ver reseña</button></td>
-	<td><button class="btn-sm btn-danger" *appTypeValidator="['Cliente']" (click)="openModal2(dentistShift.data.dni)">Realizar encuesta</button></td>
+    <td>{{dentistShift.data.status}}</td>
+    <td><button class="btn-sm btn-danger" *ngIf="dentistShift.data.status=='Pedido'&& user.type=='Cliente' "  (click)="cancel(dentistShift.id)">Cancelar turno</button></td>
+    <td><button class="btn-sm btn-info" *ngIf="user.type=='Cliente' && dentistShift.data.resena==true "  (click)="viewReview(dentistShift.id)">Ver reseña</button></td>
+	<td><button class="btn-sm btn-secondary" *ngIf="user.type=='Cliente' && dentistShift.data.encuesta==false && dentistShift.data.resena==true "  (click)="openModal2(dentistShift.data.dni,dentistShift.id)">Realizar encuesta</button></td>
     </tr>
   </tbody>
+  <tbody *appTypeValidator="['Administrador']" >
+        <tr   *ngFor="let dentistShift of dentistShiftList | filterE:filtro ">
+        
+        <td>{{dentistShift.data.dni}}</td>
+        <td>{{dentistShift.data.date}}</td>
+        <td>{{dentistShift.data.hour}}</td>
+        <td>{{dentistShift.data.specialist}}</td>
+        <td>{{dentistShift.data.status}}</td>
+        <td><button class="btn-sm btn-info" *ngIf="user.type=='Administrador' && dentistShift.data.encuesta==true "  (click)="openModal3(dentistShift.id)">Ver encuesta</button></td>
+  </tbody>
+  <tbody *appTypeValidator="['Especialista', 'Recepcionista']" >
+        <tr   *ngFor="let dentistShift of dentistShiftList  ">
+        
+        <td>{{dentistShift.data.dni}}</td>
+        <td>{{dentistShift.data.date}}</td>
+        <td>{{dentistShift.data.hour}}</td>
+        <td>{{dentistShift.data.specialist}}</td>
+        <td>{{dentistShift.data.status}}</td>
+        <td><button class="btn-sm btn-danger" *ngIf="dentistShift.data.status=='Pedido'&& user.type=='Recepcionista' "  (click)="cancel(dentistShift.id)">Cancelar turno</button></td>
+	    <td><button class="btn-sm btn-success" *ngIf="dentistShift.data.status=='Pedido'&& user.type=='Especialista' " (click)="attend(dentistShift.id, dentistShift.data.dni, dentistShift.data.date, dentistShift.data.hour, dentistShift.data.specialist)">Atender turno</button></td>
+        <td><button class="btn-sm btn-info" *ngIf="user.type=='Especialista' && dentistShift.data.resena==false " (click)="openModal1(dentistShift.id)">Enviar reseña</button></td>
+        <td><button class="btn-sm btn-info" *ngIf="user.type=='Especialista' && dentistShift.data.encuesta==true "  (click)="openModal3(dentistShift.id)">Ver encuesta</button></td>
+    </tbody>
 </table>
 </article>
 
 
 </div> <!-- card.// -->
-<button type="button" class="btn btn-success     mx-auto mb-4" (click)="generarPDF()" >Generar PDF</button>
+<button type="button"   *appTypeValidator="['Especialista', 'Recepcionista','Cliente']"  class="btn btn-success     mx-auto mb-4" (click)="generarPDF()" >Generar PDF</button>
 </div>
 
 
@@ -125,7 +149,7 @@
 	<div class="card text-white bg-dark mb-3">
 
 	<form [formGroup]="form2" class="card text-white bg-dark mb-3">
- 
+        
     <div class="modal-header">
         <h4 class="modal-title">
             <span>Encuesta</span>
@@ -135,22 +159,60 @@
         </button>
     </div>
     <div class="modal-body">
+           
     	<p> <span>DNI:</span></p>
     	<input type="text" class="form-control" formControlName="dni" [(ngModel)]="dni" readonly>
     	<br>
     	<p> <span>Calificación clínica:</span></p>
-    	<input type="number" class="form-control" formControlName="clinic">
+        <input type="number" class="form-control" formControlName="clinic" min="0" max="10">
+        
     	<br>
     	<p> <span>Calificación especialista:</span></p>
-    	<input type="number" class="form-control" formControlName="specialist">
+        <input type="number" class="form-control" formControlName="specialist" min="0" max="10">
+        
     	<br>
         <p> <span>Descripción:</span></p>
        	<textarea class="form-control" formControlName="descPoll" rows="3"></textarea>
     </div>
+
     <div class="modal-footer">
+            <small *ngIf="isMsj" class="text-left text-danger">Puntaje incorrecto! </small>
         <button type="submit" (click)="tryPoll()" class="btn btn-warning">Enviar</button>
     </div>
+
 	</form>
     </div>
 </ng-template>
+<ng-template #encuesta let-modal class="card text-white bg-dark mb-3">
+	
+	
+
+        <div class="card text-white bg-dark mb-3">
+    
+    
+        
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <span>Encuesta</span>
+            </h4>
+        
+            <button type="button" class="close" aria-label="Close" (click)="closeModal3()">
+                <span aria-hidden="true" >&times;</span>
+            </button>
+        </div>
+        
+        <div class="modal-body" *ngFor="let poll of polls">
+            <p> <span>Puntaje clinica:</span></p>
+            <p>{{poll.data.clinic}}</p>
+            <br>
+            <p> <span>Puntaje especialista :</span></p>
+            <p>{{poll.data.specialist}}</p>
+            <br>
+            <p> <span>Descripción:</span></p>
+            <textarea class="form-control" rows="3" readonly>{{poll.data.desc}}</textarea>
+        </div>
+     
+        </div>
+        
+    </ng-template>
 
