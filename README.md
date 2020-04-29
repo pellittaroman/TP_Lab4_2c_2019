@@ -1,6 +1,7 @@
 <h1>Laboratorio IV</h1>
 <h1>Trabajo Práctico Nº 2 - Buena Sonrisa</h1>
-<h3>Roman Pellitta<h3>
+<h2>Roman Pellitta<h2>
+<h1>https://pellittaroman.github.io/TP_Lab4_2c_2019/<h1>
 
 <br><br>
 
